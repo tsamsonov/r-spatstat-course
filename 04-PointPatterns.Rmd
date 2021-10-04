@@ -1,5 +1,3 @@
-# (PART) Размещение и структура {-}
-
 # Точечные паттерны {#points}
 
 ```{r setup-ppp, echo = FALSE, purl = FALSE, include=FALSE}
@@ -345,5 +343,5 @@ knitr::include_url('https://tsamsonov.github.io/r-geo-course/slides/16-PointPatt
 ### Упражнения {#tasks_patterns}
 
 ----
-_Самсонов Т.Е._ **Пространственная статистика на языке R.** М.: Географический факультет МГУ, `r lubridate::year(Sys.Date())`.
+_Самсонов Т.Е._ **Пространственная статистика и моделирование на языке R.** М.: Географический факультет МГУ, `r lubridate::year(Sys.Date())`.
 ----

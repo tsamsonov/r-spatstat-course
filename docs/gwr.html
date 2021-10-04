@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Глава 2 Географически взвешенная регрессия | Пространственная статистика на языке R</title>
+<title>Глава 2 Географически взвешенная регрессия | Пространственная статистика и моделирование на языке R</title>
 <meta name="author" content="Тимофей Самсонов">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +19,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Пространственная статистика на языке R</a>
+        <a href="index.html" title="">Пространственная статистика и моделирование на языке R</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -32,13 +32,13 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Введение</a></li>
-<li class="book-part">Автокорреляция и регрессия</li>
+<li class="book-part">Пространственная статистика</li>
 <li><a class="" href="spreg.html"><span class="header-section-number">1</span> Пространственная регрессия</a></li>
 <li><a class="active" href="gwr.html"><span class="header-section-number">2</span> Географически взвешенная регрессия</a></li>
-<li class="book-part">Распределение и интерполяция</li>
 <li><a class="" href="gstat.html"><span class="header-section-number">3</span> Геостатистика</a></li>
-<li class="book-part">Размещение и структура</li>
 <li><a class="" href="points.html"><span class="header-section-number">4</span> Точечные паттерны</a></li>
+<li class="book-part">Пространственное моделирование</li>
+<li><a class="" href="ecol.html"><span class="header-section-number">5</span> Экологические модели</a></li>
 </ul>
 
         <div class="book-extra">
@@ -186,14 +186,11 @@
 </h3>
 <div class="inline-table"><table class="table table-sm"><tbody><tr class="odd">
 <td>
-<em>Самсонов Т.Е.</em> <strong>Пространственная статистика на языке R.</strong> М.: Географический факультет МГУ, 2021.</td>
+<em>Самсонов Т.Е.</em> <strong>Пространственная статистика и моделирование на языке R.</strong> М.: Географический факультет МГУ, 2021.</td>
 </tr></tbody></table></div>
 </div>
 </div>
 </div>
-
-
-
   <div class="chapter-nav">
 <div class="prev"><a href="spreg.html"><span class="header-section-number">1</span> Пространственная регрессия</a></div>
 <div class="next"><a href="gstat.html"><span class="header-section-number">3</span> Геостатистика</a></div>
@@ -231,7 +228,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Пространственная статистика на языке R</strong>" was written by Тимофей Самсонов. It was last built on 2021-10-04.</p>
+    <p>"<strong>Пространственная статистика и моделирование на языке R</strong>" was written by Тимофей Самсонов. It was last built on 2021-10-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
