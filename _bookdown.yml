@@ -1,0 +1,28 @@
+book_filename: "r-spatstat-course"
+chapter_name: "Глава "
+output_dir: docs
+rmd_files:
+    - "index.Rmd"
+    - "01-SpatialRegression.Rmd"
+    - "02-GWRegression.Rmd"
+    - "03-Geostatistics.Rmd"
+    - "04-PointPatterns.Rmd"
+new_session: true
+language:
+  label:
+    fig: 'Рис. '
+    tab: 'Таблица '
+    eq: 'Уравнение '
+    thm: 'Теорема '
+    lem: 'Лемма '
+    def: 'Определение '
+    cor: 'Следствие '
+    prp: 'Предположение '
+    exm: 'Пример '
+    exr: 'Упражнение '
+    proof: 'Доказательство. '
+    remark: 'Заметка. '
+    solution: 'Решение. '
+  ui:
+    edit: Редактировать
+    chapter_name: 'Глава '

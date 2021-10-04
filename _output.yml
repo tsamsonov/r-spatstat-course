@@ -1,0 +1,4 @@
+bookdown::bs4_book:
+  theme:
+    primary: "#543871"
+  repo: https://github.com/tsamsonov/r-spatstat-course
