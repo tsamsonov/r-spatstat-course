@@ -6,10 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Глава 2 Географически взвешенная регрессия | Пространственная статистика и моделирование на языке R</title>
 <meta name="author" content="Тимофей Самсонов">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="library(sf) library(RColorBrewer) library(readxl) library(tidyverse) library(tmap) library(GWmodel) Программный код главы  2.1 Географически взвешенная регрессия (GWR) В стандартной модели...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Глава 2 Географически взвешенная регрессия | Пространственная статистика и моделирование на языке R">
+<meta property="og:type" content="book">
+<meta property="og:description" content="library(sf) library(RColorBrewer) library(readxl) library(tidyverse) library(tmap) library(GWmodel) Программный код главы  2.1 Географически взвешенная регрессия (GWR) В стандартной модели...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Глава 2 Географически взвешенная регрессия | Пространственная статистика и моделирование на языке R">
+<meta name="twitter:site" content="@timofeysamsonov">
+<meta name="twitter:description" content="library(sf) library(RColorBrewer) library(readxl) library(tidyverse) library(tmap) library(GWmodel) Программный код главы  2.1 Географически взвешенная регрессия (GWR) В стандартной модели...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS -->
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -89,7 +98,7 @@
 </h3>
 <p>Весовая функция должна быть убывающей. Существует множество вариантов таких функций, но наиболее часто используются гауссоподобные варианты:</p>
 <div class="figure">
-<span id="fig:unnamed-chunk-2"></span>
+<span style="display:block;" id="fig:unnamed-chunk-2"></span>
 <img src="images/gwr_wlocal.png" alt="Весовая функция" width="100%"><p class="caption">
 Рис. 1.2: Весовая функция
 </p>
@@ -98,14 +107,14 @@
 <p><span class="math display">\[w_{ij} = \operatorname{exp}\{-\frac{1}{2} (d_{ij}/h)^2\},\]</span></p>
 <p>где <span class="math inline">\(d_{ij}\)</span> есть расстояние, <span class="math inline">\(h\)</span> — полоса пропускания.</p>
 <div class="figure">
-<span id="fig:unnamed-chunk-3"></span>
+<span style="display:block;" id="fig:unnamed-chunk-3"></span>
 <img src="images/wfixed.png" alt="Фиксированная весовая функция" width="100%"><p class="caption">
 Рис. 1.3: Фиксированная весовая функция
 </p>
 </div>
 <p>В случае <em>адаптивной</em> весовой функции окрестность ограничивается <span class="math inline">\(N\)</span> ближайшими точками. За пределами этой окрестности веса принимаются равными нулю:</p>
 <div class="figure">
-<span id="fig:unnamed-chunk-4"></span>
+<span style="display:block;" id="fig:unnamed-chunk-4"></span>
 <img src="images/wadaptive.png" alt="Адаптивная весовая функция" width="100%"><p class="caption">
 Рис. 1.4: Адаптивная весовая функция
 </p>
@@ -124,10 +133,10 @@
 </h3>
 <p>В качестве примера проанализируем каким образом цена жилья зависит от количества комнат на примере данных по стоимости недвижимости в Бостоне, доступных на <a href="https://www.jefftk.com/apartment_prices/data-listing">данном сайте</a>, и выгруженных с североамериканского информационного портала недвижимости <a href="https://www.padmapper.com/apartments/boston-ma?box=-71.2297689,42.2745193,-70.9215169,42.4531515">padmapper.com</a>:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">realest</span> <span class="op">=</span> <span class="fu">read_delim</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html">url</a></span><span class="op">(</span><span class="st">'https://www.jefftk.com/apartment_prices/apts-1542637382.txt'</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="va">realest</span> <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_delim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html">url</a></span><span class="op">(</span><span class="st">'https://www.jefftk.com/apartment_prices/apts-1542637382.txt'</span><span class="op">)</span>,
                  delim <span class="op">=</span> <span class="st">' '</span>,
-                 col_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'price'</span>, <span class="st">'rooms'</span>, <span class="st">'id'</span>, <span class="st">'lon'</span>, <span class="st">'lat'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'lon'</span>, <span class="st">'lat'</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span> <span class="op">%&gt;%</span>
+                 col_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'price'</span>, <span class="st">'rooms'</span>, <span class="st">'id'</span>, <span class="st">'lon'</span>, <span class="st">'lat'</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'lon'</span>, <span class="st">'lat'</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="fl">3395</span><span class="op">)</span>
 
 <span class="co"># tmap_mode('view')</span>
@@ -143,7 +152,7 @@
 <div class="inline-figure"><img src="02-GWRegression_files/figure-html/unnamed-chunk-5-1.png" width="100%"></div>
 <p>Для того чтобы оценить пространственую неравномерность реакции стоимости жилья на увеличение количества комнат, построим модель географически взвешенной регрессии:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">samples</span> <span class="op">=</span> <span class="va">realest</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/coerce-methods.html">as</a></span><span class="op">(</span><span class="st">'Spatial'</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">samples</span> <span class="op">=</span> <span class="va">realest</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/coerce-methods.html">as</a></span><span class="op">(</span><span class="st">'Spatial'</span><span class="op">)</span>
 
 <span class="op">(</span><span class="va">gwr_res</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/GWmodel/man/gwr.basic.html">gwr.basic</a></span><span class="op">(</span><span class="va">price</span> <span class="op">~</span> <span class="va">rooms</span>, data <span class="op">=</span> <span class="va">samples</span>, bw <span class="op">=</span> <span class="fl">1000</span>, kernel <span class="op">=</span> <span class="st">'gaussian'</span><span class="op">)</span><span class="op">)</span>
 
@@ -162,7 +171,7 @@
 <span class="header-section-number">2.2</span> Краткий обзор<a class="anchor" aria-label="anchor" href="#gwr_review"><i class="fas fa-link"></i></a>
 </h2>
 <p>Для просмотра презентации щелкните на ней один раз левой кнопкой мыши и листайте, используя кнопки на клавиатуре:
-<iframe src="https://tsamsonov.github.io/r-geo-course/slides/15-SpatialRegression_slides.html#1" width="100%" height="500px"></iframe></p>
+<iframe src="https://tsamsonov.github.io/r-geo-course/slides/15-SpatialRegression_slides.html#1" width="100%" height="500px" data-external="1"></iframe></p>
 <blockquote>
 <p>Презентацию можно открыть в отдельном окне или вкладке браузере. Для этого щелкните по ней правой кнопкой мыши и выберите соответствующую команду.</p>
 </blockquote>
@@ -228,7 +237,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Пространственная статистика и моделирование на языке R</strong>" was written by Тимофей Самсонов. It was last built on 2021-10-04.</p>
+    <p>"<strong>Пространственная статистика и моделирование на языке R</strong>" was written by Тимофей Самсонов. It was last built on 2021-11-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -248,6 +257,22 @@
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
 </script>
 </body>
 </html>

@@ -835,12 +835,12 @@ model
 
 ```r
 # Извлекаем результаты пространственной авторегрессии
-feb_spreg = feb %>% 
+feb_spreg = feb |>  
   mutate(fitted = model$fitted.values,
-         residual = model$residuals) %>% 
-  pivot_longer(cols = c(nsick, fitted, residual), 
+         residual = model$residuals) |>  
+  pivot_longer(all_of(c("nsick", "fitted", "residual")), # TODO: cannot find sick as usual!
                names_to = 'type',
-               values_to = 'value') %>% 
+               values_to = 'value') |>  
   st_set_geometry('geometry')
 
 # Построение серии карт
@@ -863,7 +863,7 @@ ggplot() +
 ## Краткий обзор {#spreg_review}
 
 Для просмотра презентации щелкните на ней один раз левой кнопкой мыши и листайте, используя кнопки на клавиатуре:
-<iframe src="https://tsamsonov.github.io/r-geo-course/slides/15-SpatialRegression_slides.html#1" width="100%" height="500px"></iframe>
+<iframe src="https://tsamsonov.github.io/r-geo-course/slides/15-SpatialRegression_slides.html#1" width="100%" height="500px" data-external="1"></iframe>
 
 > Презентацию можно открыть в отдельном окне или вкладке браузере. Для этого щелкните по ней правой кнопкой мыши и выберите соответствующую команду.
 

@@ -6,10 +6,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Глава 3 Геостатистика | Пространственная статистика и моделирование на языке R</title>
 <meta name="author" content="Тимофей Самсонов">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="\[\newcommand{\Var}{\operatorname{Var}} \newcommand{\Cov}{\operatorname{Cov}} \newcommand{\E}{\operatorname{E}}\] Программный код главы  3.1 Введение Геостатистика — раздел математической...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Глава 3 Геостатистика | Пространственная статистика и моделирование на языке R">
+<meta property="og:type" content="book">
+<meta property="og:description" content="\[\newcommand{\Var}{\operatorname{Var}} \newcommand{\Cov}{\operatorname{Cov}} \newcommand{\E}{\operatorname{E}}\] Программный код главы  3.1 Введение Геостатистика — раздел математической...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Глава 3 Геостатистика | Пространственная статистика и моделирование на языке R">
+<meta name="twitter:site" content="@timofeysamsonov">
+<meta name="twitter:description" content="\[\newcommand{\Var}{\operatorname{Var}} \newcommand{\Cov}{\operatorname{Cov}} \newcommand{\E}{\operatorname{E}}\] Программный код главы  3.1 Введение Геостатистика — раздел математической...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS -->
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -552,11 +561,11 @@ Y^* =  \sum_{i} \lambda_i Y_i.
   gamma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span> <span class="op">*</span> <span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="op">(</span><span class="va">a</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">a</span><span class="op">)</span> <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="op">(</span><span class="va">a</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">/</span> <span class="va">a</span><span class="op">)</span><span class="op">^</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span><span class="op">-</span><span class="va">a</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
 
-<span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="va">tab</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">h</span>, <span class="va">gamma</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">a</span>, color <span class="op">=</span> <span class="st">'orangered'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">annotate</span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.5625</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"a ="</span>, <span class="va">a</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'orangered'</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="va">tab</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">h</span>, <span class="va">gamma</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">a</span>, color <span class="op">=</span> <span class="st">'orangered'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.5625</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"a ="</span>, <span class="va">a</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'orangered'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;"></div>
 <p>Данная модель достигает плато в точке <span class="math inline">\(h = a\)</span>.</p>
 </div>
@@ -575,11 +584,11 @@ Y^* =  \sum_{i} \lambda_i Y_i.
   gamma <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span><span class="op">*</span><span class="va">h</span><span class="op">/</span><span class="va">a</span><span class="op">)</span>
 <span class="op">)</span>
 
-<span class="va">pl</span> <span class="op">=</span> <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="va">tab</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">h</span>, <span class="va">gamma</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">a</span>, color <span class="op">=</span> <span class="st">'orangered'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">annotate</span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.5625</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"a ="</span>, <span class="va">a</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'orangered'</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span>
+<span class="va">pl</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="va">tab</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">h</span>, <span class="va">gamma</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">a</span>, color <span class="op">=</span> <span class="st">'orangered'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.5625</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"a ="</span>, <span class="va">a</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'orangered'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="op">(</span><span class="va">pl</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -599,11 +608,11 @@ Y^* =  \sum_{i} \lambda_i Y_i.
   gamma <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span><span class="op">*</span><span class="va">h</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="va">a</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>
 <span class="op">)</span>
 
-<span class="va">pl</span> <span class="op">=</span> <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="va">tab</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">h</span>, <span class="va">gamma</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">a</span>, color <span class="op">=</span> <span class="st">'orangered'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">annotate</span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.5625</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"a ="</span>, <span class="va">a</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'orangered'</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span>
+<span class="va">pl</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="va">tab</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">h</span>, <span class="va">gamma</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">a</span>, color <span class="op">=</span> <span class="st">'orangered'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span><span class="st">"text"</span>, x <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="fl">3</span>, y <span class="op">=</span> <span class="fl">0.5625</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"a ="</span>, <span class="va">a</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'orangered'</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="op">(</span><span class="va">pl</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -627,9 +636,9 @@ Y^* =  \sum_{i} \lambda_i Y_i.
   gamma <span class="op">=</span> <span class="va">h</span><span class="op">^</span><span class="fl">1.5</span>
 <span class="op">)</span>
 
-<span class="va">pl</span> <span class="op">=</span> <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="va">tab</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">h</span>, <span class="va">gamma</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span>
+<span class="va">pl</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="va">tab</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">h</span>, <span class="va">gamma</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="op">(</span><span class="va">pl</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -654,12 +663,12 @@ Y^* =  \sum_{i} \lambda_i Y_i.
   h <span class="op">=</span> <span class="va">h</span>
 <span class="op">)</span>
 
-<span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="va">tab</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">h</span>, <span class="va">gamma</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">21</span>,
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="va">tab</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">h</span>, <span class="va">gamma</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>, shape<span class="op">=</span><span class="fl">21</span>,
              colour <span class="op">=</span> <span class="st">'steelblue'</span>, fill <span class="op">=</span> <span class="st">'white'</span>, size <span class="op">=</span> <span class="fl">3</span>, stroke <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">annotate</span><span class="op">(</span><span class="st">'point'</span>, x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span>, color <span class="op">=</span> <span class="st">'steelblue'</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span><span class="st">'point'</span>, x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span>, color <span class="op">=</span> <span class="st">'steelblue'</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/sam-1.png" width="100%" style="display: block; margin: auto;"></div>
 <ul>
 <li>Наличие у данных вариограммы типа наггет означает отсутствие пространственной корреляции.</li>
@@ -691,7 +700,7 @@ Y^* =  \sum_{i} \lambda_i Y_i.
 <span class="co">## Bounding box:  xmin: 368910.4 ymin: 4930119 xmax: 686026 ymax: 5115936</span>
 <span class="co">## Projected CRS: WGS 84 / UTM zone 32N</span>
 
-<span class="va">rainfall</span> <span class="op">=</span> <span class="fu">read_table2</span><span class="op">(</span><span class="st">"data/Rainfall.dat"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">rainfall</span> <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_table2.html">read_table2</a></span><span class="op">(</span><span class="st">"data/Rainfall.dat"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'x'</span>, <span class="st">'y'</span><span class="op">)</span>, 
            crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">cities</span><span class="op">)</span>,
            remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -707,10 +716,10 @@ Y^* =  \sum_{i} \lambda_i Y_i.
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">varcl</span> <span class="op">=</span> <span class="fu">variogram</span><span class="op">(</span><span class="va">rain_24</span><span class="op">~</span><span class="fl">1</span>, data<span class="op">=</span><span class="va">rainfall</span>, cutoff <span class="op">=</span> <span class="fl">150000</span>, cloud<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">varcl</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">dist</span>, <span class="va">gamma</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.5</span>, size <span class="op">=</span> <span class="fl">2</span>, color <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">ylab</span><span class="op">(</span><span class="st">'semivariance'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">varcl</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">dist</span>, <span class="va">gamma</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.5</span>, size <span class="op">=</span> <span class="fl">2</span>, color <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">'semivariance'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-7-1.png" width="100%"></div>
 </div>
 <div id="эмпирическая-вариограмма" class="section level3" number="3.4.19">
@@ -727,22 +736,22 @@ Y^* =  \sum_{i} \lambda_i Y_i.
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-9-1.png" width="100%"></div>
 <p>Оставив только вариограмму, получим:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="va">vargr</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">dist</span>, <span class="va">gamma</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="va">vargr</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">dist</span>, <span class="va">gamma</span>, size <span class="op">=</span> <span class="va">np</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_size</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="va">vargr</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">dist</span>, <span class="va">gamma</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="va">vargr</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">dist</span>, <span class="va">gamma</span>, size <span class="op">=</span> <span class="va">np</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure">
 <img src="03-Geostatistics_files/figure-html/unnamed-chunk-10-1.png" width="100%">
 Размер точки означает количество пар значений, которые попали в каждый лаг.</div>
 <p>Поскольку вариограмма есть <em>дисперсия разности значений</em>, ее рост при увеличении расстояния можно оценить также по увеличению размера «ящика» на диаграмме размаха <span class="math inline">\(\sqrt\gamma\)</span>:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">varcl</span> <span class="op">=</span> <span class="va">varcl</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span>sqgamma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">gamma</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="va">varcl</span> <span class="op">=</span> <span class="va">varcl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>sqgamma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">gamma</span><span class="op">)</span>,
          lag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">dist</span>, breaks <span class="op">=</span> <span class="va">intervals</span>, labels <span class="op">=</span> <span class="fl">0.001</span> <span class="op">*</span> <span class="op">(</span><span class="va">intervals</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="fl">0.5</span><span class="op">*</span><span class="va">width</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">varcl</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">lag</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">gamma</span><span class="op">)</span><span class="op">)</span>, outlier.alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">varcl</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">lag</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">gamma</span><span class="op">)</span><span class="op">)</span>, outlier.alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-11-1.png" width="100%"></div>
 </div>
 <div id="вариокарта" class="section level3" number="3.4.20">
@@ -791,16 +800,16 @@ Y^* =  \sum_{i} \lambda_i Y_i.
   fit <span class="op">=</span> <span class="st">'automatic'</span>
 <span class="op">)</span>
 
-<span class="va">tab</span> <span class="op">=</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="va">tab1</span>, <span class="va">tab2</span><span class="op">)</span>
+<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">tab1</span>, <span class="va">tab2</span><span class="op">)</span>
 
-<span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="va">vargr</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">dist</span>, <span class="va">gamma</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="va">vargr</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">dist</span>, <span class="va">gamma</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_size</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="va">tab</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">h</span>, <span class="va">gamma</span>, color <span class="op">=</span> <span class="va">fit</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">xlab</span><span class="op">(</span><span class="st">'lag'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">'gamma'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">'Сферическая модель'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="va">vargr</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">dist</span>, <span class="va">gamma</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="va">vargr</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">dist</span>, <span class="va">gamma</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="va">tab</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">h</span>, <span class="va">gamma</span>, color <span class="op">=</span> <span class="va">fit</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">'lag'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">'gamma'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'Сферическая модель'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-15-1.png" width="100%"></div>
 </div>
 <div id="обычный-кригинг-1" class="section level3" number="3.4.22">
@@ -814,9 +823,9 @@ Y^* =  \sum_{i} \lambda_i Y_i.
 
 <span class="va">px_grid</span> <span class="op">=</span> <span class="fu">st_as_stars</span><span class="op">(</span><span class="va">box</span>, dx <span class="op">=</span> <span class="fl">2000</span>, dy <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span>
 
-<span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">rainfall</span>, color <span class="op">=</span> <span class="st">'red'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="va">px_grid</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">0.5</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">rainfall</span>, color <span class="op">=</span> <span class="st">'red'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="va">px_grid</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">0.5</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-16-1.png" width="100%"></div>
 </div>
 <div id="обычный-кригинг-2" class="section level3" number="3.4.23">
@@ -860,29 +869,29 @@ Y^* =  \sum_{i} \lambda_i Y_i.
 <span class="va">cont</span> <span class="op">=</span> <span class="fu">st_contour</span><span class="op">(</span><span class="va">px_grid</span><span class="op">[</span><span class="st">'var1.pred'</span><span class="op">]</span>, breaks <span class="op">=</span> <span class="va">rain_levels</span>, contour_lines <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">conterr</span> <span class="op">=</span> <span class="fu">st_contour</span><span class="op">(</span><span class="va">px_grid</span><span class="op">[</span><span class="st">'var1.var'</span><span class="op">]</span>, breaks <span class="op">=</span> <span class="va">err_levels</span>, contour_lines <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_stars</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">px_grid</span><span class="op">[</span><span class="st">'var1.pred'</span><span class="op">]</span>, breaks <span class="op">=</span> <span class="va">rain_levels</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_fill_manual</span><span class="op">(</span>name <span class="op">=</span> <span class="st">'мм'</span>,
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">'мм'</span>,
                     values <span class="op">=</span> <span class="fu">rain_colors</span><span class="op">(</span><span class="va">rain_ncolors</span><span class="op">)</span>,
                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">rain_levels</span><span class="op">[</span><span class="op">-</span><span class="va">rain_ncolors</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="st">'-'</span>, <span class="va">rain_levels</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,
                     drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_sf</span><span class="op">(</span>crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">cont</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">rainfall</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">coord_sf</a></span><span class="op">(</span>crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">cont</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">rainfall</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-19-1.png" width="100%"></div>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_stars</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">px_grid</span><span class="op">[</span><span class="st">'var1.var'</span><span class="op">]</span>, breaks <span class="op">=</span> <span class="va">err_levels</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_fill_manual</span><span class="op">(</span>name <span class="op">=</span> <span class="st">'мм'</span>,
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">'мм'</span>,
                     values <span class="op">=</span> <span class="fu">err_colors</span><span class="op">(</span><span class="va">err_ncolors</span><span class="op">)</span>,
                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">err_levels</span><span class="op">[</span><span class="op">-</span><span class="va">err_ncolors</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="st">'-'</span>, <span class="va">err_levels</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,
                     drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_sf</span><span class="op">(</span>crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">conterr</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">rainfall</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">coord_sf</a></span><span class="op">(</span>crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">conterr</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">rainfall</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-19-2.png" width="100%"></div>
 <p>Дисперсия кригинга высока там, где мало данных.</p>
 </div>
@@ -892,11 +901,11 @@ Y^* =  \sum_{i} \lambda_i Y_i.
 </h3>
 <p>Для выполнения кросс-валидации воспользуемся функцией <code>krige.cv</code>:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cvl</span> <span class="op">=</span> <span class="fu">krige.cv</span><span class="op">(</span><span class="va">rain_24</span><span class="op">~</span><span class="fl">1</span>, <span class="va">rainfall</span>, <span class="va">varmd</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span>sterr <span class="op">=</span> <span class="va">residual</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">var1.var</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">cvl</span> <span class="op">=</span> <span class="fu">krige.cv</span><span class="op">(</span><span class="va">rain_24</span><span class="op">~</span><span class="fl">1</span>, <span class="va">rainfall</span>, <span class="va">varmd</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html">st_as_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>sterr <span class="op">=</span> <span class="va">residual</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">var1.var</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cvl</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_set_geometry</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cvl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_set_geometry</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span>
 <span class="co">##    var1.pred var1.var observed     residual      zscore fold       sterr</span>
 <span class="co">## 1   5.743730 34.84033      6.0   0.25627005  0.04341669    1  0.04341669</span>
 <span class="co">## 2  11.137129 60.24070     10.0  -1.13712865 -0.14650910    2 -0.14650910</span>
@@ -910,17 +919,17 @@ Y^* =  \sum_{i} \lambda_i Y_i.
 <span class="co">## 10  3.489972 62.96551      0.2  -3.28997242 -0.41461106   10 -0.41461106</span></code></pre></div>
 <p>Cтандартизированные ошибки в стационарном случае должны быть распределены нормально:</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">cvl</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">sterr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_histogram</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="fu">stat</span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">'grey'</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_density</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">'olivedrab'</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">cvl</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sterr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">'grey'</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">'olivedrab'</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-21-1.png" width="100%"></div>
 <p>Ошибки должны быть независимы от значений:</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">cvl</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">var1.pred</span>, <span class="va">sterr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">'lm'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">cvl</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">var1.pred</span>, <span class="va">sterr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">'lm'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-22-1.png" width="100%"></div>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -938,10 +947,10 @@ Y^* =  \sum_{i} \lambda_i Y_i.
 <span class="co">## -0.005310204</span></code></pre></div>
 <p>Облако рассеяния оценки относительно истинных значений должно быть компактным:</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">cvl</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">var1.pred</span>, <span class="va">observed</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">'lm'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">cvl</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">var1.pred</span>, <span class="va">observed</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">'lm'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-23-1.png" width="100%"></div>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -972,8 +981,8 @@ Y^* =  \sum_{i} \lambda_i Y_i.
 <span class="va">coords</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html">st_coordinates</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">)</span>
 <span class="va">coords_grid</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html">st_coordinates</a></span><span class="op">(</span><span class="va">px_grid</span><span class="op">)</span>
 
-<span class="va">px_grid</span> <span class="op">=</span> <span class="va">px_grid</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span>sterr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/akima/man/interpp.html">interpp</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">coords</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,
+<span class="va">px_grid</span> <span class="op">=</span> <span class="va">px_grid</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>sterr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/akima/man/interpp.html">interpp</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">coords</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,
                          y <span class="op">=</span> <span class="va">coords</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>,
                          z <span class="op">=</span> <span class="va">cvl</span><span class="op">$</span><span class="va">sterr</span>, 
                          xo <span class="op">=</span> <span class="va">coords_grid</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,
@@ -987,16 +996,16 @@ Y^* =  \sum_{i} \lambda_i Y_i.
 
 <span class="va">sterrcont</span> <span class="op">=</span> <span class="fu">st_contour</span><span class="op">(</span><span class="va">px_grid</span><span class="op">[</span><span class="st">'sterr'</span><span class="op">]</span>, breaks <span class="op">=</span> <span class="va">sterr_levels</span>, contour_lines <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_stars</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">px_grid</span><span class="op">[</span><span class="st">'sterr'</span><span class="op">]</span>, breaks <span class="op">=</span> <span class="va">sterr_levels</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_fill_manual</span><span class="op">(</span>name <span class="op">=</span> <span class="st">'мм'</span>,
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">'мм'</span>,
                     values <span class="op">=</span> <span class="fu">sterr_colors</span><span class="op">(</span><span class="va">sterr_ncolors</span><span class="op">)</span>,
                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">sterr_levels</span><span class="op">[</span><span class="op">-</span><span class="va">sterr_ncolors</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="st">'-'</span>, <span class="va">sterr_levels</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,
                     drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_sf</span><span class="op">(</span>crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">sterrcont</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_sf</span><span class="op">(</span>data <span class="op">=</span> <span class="va">rainfall</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">coord_sf</a></span><span class="op">(</span>crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">rainfall</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sterrcont</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">rainfall</span>, color <span class="op">=</span> <span class="st">'black'</span>, size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="03-Geostatistics_files/figure-html/unnamed-chunk-24-1.png" width="100%"></div>
 </div>
 </div>
@@ -1005,7 +1014,7 @@ Y^* =  \sum_{i} \lambda_i Y_i.
 <span class="header-section-number">3.5</span> Краткий обзор<a class="anchor" aria-label="anchor" href="#geostat_review"><i class="fas fa-link"></i></a>
 </h2>
 <p>Для просмотра презентации щелкните на ней один раз левой кнопкой мыши и листайте, используя кнопки на клавиатуре:
-<iframe src="https://tsamsonov.github.io/r-geo-course/slides/14-Geostatistics_slides.html#1" width="100%" height="500px"></iframe></p>
+<iframe src="https://tsamsonov.github.io/r-geo-course/slides/14-Geostatistics_slides.html#1" width="100%" height="500px" data-external="1"></iframe></p>
 <blockquote>
 <p>Презентацию можно открыть в отдельном окне или вкладке браузере. Для этого щелкните по ней правой кнопкой мыши и выберите соответствующую команду.</p>
 </blockquote>
@@ -1138,7 +1147,7 @@ Y^* =  \sum_{i} \lambda_i Y_i.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Пространственная статистика и моделирование на языке R</strong>" was written by Тимофей Самсонов. It was last built on 2021-10-04.</p>
+    <p>"<strong>Пространственная статистика и моделирование на языке R</strong>" was written by Тимофей Самсонов. It was last built on 2021-11-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -1158,6 +1167,22 @@ Y^* =  \sum_{i} \lambda_i Y_i.
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
 </script>
 </body>
 </html>
