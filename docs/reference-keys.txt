@@ -40,7 +40,6 @@ review
 обычный-кригинг-2
 оценка-и-дисперсия-кригинга
 кросс-валидация-1
-geostat_review
 geostat_qt
 geostat_q
 geostat_t
@@ -59,7 +58,6 @@ autocorrelation_moran
 autocorrelation_permutation
 autocorrelation_moranscatter
 autocorrelation_autoregression
-spreg_review
 questions_tasks_spreg
 questions_spreg
 tasks_spreg
@@ -67,7 +65,6 @@ gwr
 autocorrelation_gwr
 весовые-функции
 практический-анализ-1
-gwr_review
 questions_tasks_gwr
 questions_gwr
 tasks_gwr
@@ -87,7 +84,6 @@ points
 анализ-интенсивности
 анализ-зависимости
 моделирование
-point_review
 questions_tasks_patterns
 questions_patterns
 tasks_patterns
