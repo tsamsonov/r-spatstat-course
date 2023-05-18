@@ -3,11 +3,10 @@ chapter_name: "Глава "
 output_dir: docs
 rmd_files:
     - "index.Rmd"
-    - "01-SpatialRegression.Rmd"
-    - "02-GWRegression.Rmd"
-    - "03-Geostatistics.Rmd"
+    - "01-Geostatistics.Rmd"
+    - "02-SpatialRegression.Rmd"
+    - "03-GWRegression.Rmd"
     - "04-PointPatterns.Rmd"
-    - "05-EcologicalModeling.Rmd"
 new_session: true
 language:
   label:

@@ -2,7 +2,13 @@
 
 
 
-[Программный код главы](https://github.com/tsamsonov/r-geo-course/blob/master/code/15-SpatstatAutocorrelation.R)
+## Краткий обзор {#review}
+
+Для просмотра презентации щелкните на ней один раз левой кнопкой мыши и листайте, используя кнопки на клавиатуре:
+
+<iframe src="https://tsamsonov.github.io/r-spatstat-course-slides/02-SpatialRegression_slides.html#1" width="100%" height="390px" data-external="1"></iframe>
+
+> Презентацию можно открыть в отдельном окне или вкладке браузере. Для этого щелкните по ней правой кнопкой мыши и выберите соответствующую команду.
 
 ## Введение {#autocorrelation_intro}
 
@@ -63,26 +69,26 @@ $$\boldsymbol\epsilon \sim \mathcal{N}_k(0, \sigma^2 \mathbf{I}),$$
 
 <div class="figure">
 <img src="images/tyne_ownerocc.png" alt="Процент домохозяйств, находящихся во владении" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-1)Процент домохозяйств, находящихся во владении</p>
+<p class="caption">(\#fig:unnamed-chunk-2)Процент домохозяйств, находящихся во владении</p>
 </div>
 
 <div class="figure">
 <img src="images/tyne_unempl.png" alt="Уровень безработицы" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-2)Уровень безработицы</p>
+<p class="caption">(\#fig:unnamed-chunk-3)Уровень безработицы</p>
 </div>
 
 Обычная линейная регрессия показывает хорошую согласованность между этими параметрами:
 
 <div class="figure">
 <img src="images/tyne_regr.png" alt="Зависимость процента домохозяйств во владении от уровня безработицы" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-3)Зависимость процента домохозяйств во владении от уровня безработицы</p>
+<p class="caption">(\#fig:unnamed-chunk-4)Зависимость процента домохозяйств во владении от уровня безработицы</p>
 </div>
 
 Однако остатки регрессии демонстрируют явную пространственную зависимость, что говорит о том, что построенная модель неадекватно описывает исследуемую закономерность:
 
 <div class="figure">
 <img src="images/tyne_resid.png" alt="Остатки линейной регрессии" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-4)Остатки линейной регрессии</p>
+<p class="caption">(\#fig:unnamed-chunk-5)Остатки линейной регрессии</p>
 </div>
 
 Чтобы моделировать подобную зависимость остатков, необходим более широкий класс моделей:
@@ -188,7 +194,7 @@ par(mar = c(1, 1, 1, 1))
 plot(reg, border = "gray50")
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-5-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-6-1.png" width="100%" />
 
 ## Пространственное соседство {#autocorrelation_neighbors}
 
@@ -245,7 +251,7 @@ plot(nb_queen, coords, pch = 19, cex = 0.5, add = TRUE)
 title(main = "Соседи по смежности (правило ферзя)")
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-7-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-8-1.png" width="100%" />
 
 Для определения соседей по правилу ладьи необходимо вызвать функцию `poly2nb()` с аргументом `queen=FALSE`. В нашем случае, правда, это даст тот же результат, поскольку в данных отсутствуют единицы, соприкасающиеся в одной лишь точке:
 
@@ -257,7 +263,7 @@ plot(nb_rook, coords, pch = 19, cex = 0.5, add = TRUE)
 title(main = "Соседи по смежности (правило ладьи)")
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-8-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-9-1.png" width="100%" />
 
 Обратим внимание на то, что функция `poly2nb()` принимает на вход площадные объекты. Все помледующие методы определения соседства (по графу и по метрике) работают с точечными данными.
 
@@ -276,7 +282,7 @@ plot(nb_tin, coords, pch = 19, cex = 0.5, add = TRUE)
 title(main = "Соседи по триангуляции Делоне")
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-9-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-10-1.png" width="100%" />
 
 __Соседи по сфере влияния__ получаются путем фильтрации триангуляции Делоне. Для каждой вершины находится расстояние до ближайшего соседа $D_{min}$ --- это расстояние называется радиусом _сферы влияния_ вершины. Остальные ребра триангуляции, инцидентные (примыкающие к) данной вершине, сохраняются только если их длина $D$ превышает радиус ее сферы влияния не более чем вдвое: $D \leq 2D_{min}$. Рассуждая геометрически, можно сказать, что сферы радиусом $D_{min}$, построенные в точке и ее соседях по триангуляции, должны пересекаться. Процесс фильтрации по сфере влияния иллюстрирует рисунок ниже.
 
@@ -299,7 +305,7 @@ plot(nb_tin, coords, pch = 19, cex = 0.5, add = TRUE)
 title(main = "Соседи по сфере влияния")
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-10-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-11-1.png" width="100%" />
 
 __Соседи по графу Гэбриела__ получаются также путем фильтрации триангуляции Делоне. В каждом треугольнике ребро сохранятся только тогда, когда построенная на нем окружность не включает третью точку треугольника (Gabriel, Sokal, 1969)^[_Gabriel K. R., Sokal R. R._ (1969), __A new statistical approach to geographic variation analysis__, Systematic Zoology, Society of Systematic Biologists, 18 (3): 259–270, DOI: 10.2307/2412323]. Данный метод проиллюстрирован рисунком ниже.
 
@@ -319,7 +325,7 @@ plot(nb_gab, coords, pch = 19, cex = 0.5, add = TRUE)
 title(main = "Соседи по графу Гэбриела")
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-11-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-12-1.png" width="100%" />
 
 __Относительные соседи по графу__ получаются путем фильтрации триангуляции Делоне по следующему правилу: ребро $A$, соединяющее две вершины $p$ и $q$, будет удалено, если найдется третья вершина $r$, такая что расстояния от нее до $p$ и $q$ ($B$ и $C$ соответственно) окажутся короче, чем $A$, то есть: $A > B$ __and__ $A > C$. Полученный граф носит название графа относительных соседей (relative neighborhood graph). Данный метод был предложен французским информатиком Готфридом Туассеном для выявления структуры множества точек, которая бы максимально соответствовала восприятию человеком формы этого множества (Toussaint, 1980)^[_Toussaint G. T._ (1980), __The relative neighborhood graph of a finite planar set__, Pattern Recognition, 12 (4): 261–268, DOI: 10.1016/0031-3203(80)90066-7].
 
@@ -337,7 +343,7 @@ plot(nb_rel, coords, pch = 19, cex = 0.5, add = TRUE)
 title(main = "Относительные соседи по графу")
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-12-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-13-1.png" width="100%" />
 
 ### Соседи по метрике {#autocorrelation_neighbors_metrics}
 
@@ -362,7 +368,7 @@ for (i in 1:4){
 }
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-13-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-14-1.png" width="100%" />
 
 Поиск __соседей по расстоянию__ осуществляется средствами функции `dnearneigh()`, которая принимает 3 аргумента: координаты точек, минимальное $d_1$ и максимальное $d_2$ расстояние. Минимальное расстояние имеет смысл использовать чтобы избежать анализа совпадающих по положению объектов, или когда известен пространственный период явления, превышающий $d_1$:
 
@@ -379,7 +385,7 @@ for (d in 5:8) {
 }
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-14-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-15-1.png" width="100%" />
 
 Итак, мы рассмотрели различные принципы выявления географического соседства. После того, как определен сам факт соседства, необходимо оценить силу пространственной связи между всеми парами соседних единиц. Эта оценка производится путем построения __матрицы пространственных весов__(spatial weights matrix).
 
@@ -551,7 +557,7 @@ M = listw2mat(Wbin)
 levelplot(M, main = "Матрица весов (бинарная)")
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-17-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-18-1.png" width="100%" />
 
 Более интересный результат дает нормированная матрица. В ней веса всех соседей нормируются на количество соседей. То есть, если у текущей точки 2 соседа, их веса будут равны 0.5. Если 3 соседа то 0.33, 4 — 0.25 и так далее. Взвешенная матрица позволяет отразить тот факт, что одна и та же территориальная единица может оказывать неодинаковое влияние на соседние единицы:
 
@@ -567,7 +573,7 @@ levelplot(M,
           col.regions=ramp(10))
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-18-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-19-1.png" width="100%" />
 
 > Обратите внимание, что на этот раз цвета в матрице распределены асимметрично.
 
@@ -585,7 +591,7 @@ levelplot(M,
           col.regions = ramp(10))
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-19-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-20-1.png" width="100%" />
 
 Полученная матрица весов дает искомую меру потенциальной пространственной связи (близости) между всеми парами территориальных единиц. Сопоставив эту меру со значениями показателя, зафиксированными в тех же единицах, можно получить статистическую оценку пространственной автокорреляции изучаемой величины.
 
@@ -644,7 +650,7 @@ ggplot() +
   facet_wrap(~month)
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-20-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-21-1.png" width="100%" />
 
 Данная серия карт показывает, что наиболее интересный для анализа месяц — февраль, в котором наблюдается рост заболеваемости, а также очевидно наличие пространственной автокорреляции с двумя очагами в центральных и северо-зпапдных районах области.
 
@@ -661,7 +667,7 @@ plot(nb_queen, coords, pch = 19, cex = 0.5, add = TRUE)
 title(main = "Соседи по смежности (правило ферзя)")
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-21-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-22-1.png" width="100%" />
 
 ```r
 
@@ -679,7 +685,7 @@ levelplot(M,
           col.regions = ramp2(10))
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-21-2.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-22-2.png" width="100%" />
 
 ### Индекс Морана (Moran's I)  {#autocorrelation_moran}
 
@@ -784,7 +790,7 @@ hist(sim$res,
 abline(v = sim$statistic, col = "red")
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-23-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-24-1.png" width="100%" />
 
 ### Диаграмма рассеяния Морана {#autocorrelation_moranscatter}
 
@@ -794,7 +800,7 @@ abline(v = sim$statistic, col = "red")
 moran.plot(feb$nsick, W)
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-24-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-25-1.png" width="100%" />
 
 На диаграмме рассеяния Морана линиями отмечаются средние значения по обеим осям, а наклонной линией представляется линейная регрессия этих значений, при этом тангенс угла наклона прямой равен значению индекса Морана. Поскольку в данном случае распределение явно не случайно, можно приступать к его моделированию.
 
@@ -833,12 +839,12 @@ model
 
 ```r
 # Извлекаем результаты пространственной авторегрессии
-feb_spreg = feb %>% 
+feb_spreg = feb |>  
   mutate(fitted = model$fitted.values,
-         residual = model$residuals) %>% 
-  pivot_longer(cols = c(nsick, fitted, residual), 
+         residual = model$residuals) |>  
+  pivot_longer(all_of(c("nsick", "fitted", "residual")), # TODO: cannot find sick as usual!
                names_to = 'type',
-               values_to = 'value') %>% 
+               values_to = 'value') |>  
   st_set_geometry('geometry')
 
 # Построение серии карт
@@ -856,12 +862,12 @@ ggplot() +
   facet_wrap(~type)
 ```
 
-<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-26-1.png" width="100%" />
+<img src="02-SpatialRegression_files/figure-html/unnamed-chunk-27-1.png" width="100%" />
 
 ## Краткий обзор {#spreg_review}
 
 Для просмотра презентации щелкните на ней один раз левой кнопкой мыши и листайте, используя кнопки на клавиатуре:
-<iframe src="https://tsamsonov.github.io/r-geo-course/slides/15-SpatialRegression_slides.html#1" width="100%" height="500px"></iframe>
+<iframe src="https://tsamsonov.github.io/r-geo-course/slides/15-SpatialRegression_slides.html#1" width="100%" height="500px" data-external="1"></iframe>
 
 > Презентацию можно открыть в отдельном окне или вкладке браузере. Для этого щелкните по ней правой кнопкой мыши и выберите соответствующую команду.
 
@@ -905,5 +911,5 @@ ggplot() +
     - Визуализировать результаты моделирования (исходные данные, модельные данные, остатки)
 
 ----
-_Самсонов Т.Е._ **Визуализация и анализ географических данных на языке R.** М.: Географический факультет МГУ, 2021. DOI: [10.5281/zenodo.901911](https://doi.org/10.5281/zenodo.901911)
+_Самсонов Т.Е._ **Пространственная статистика и моделирование на языке R.** М.: Географический факультет МГУ, 2023.
 ----

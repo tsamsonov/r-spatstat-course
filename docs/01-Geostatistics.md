@@ -1,5 +1,3 @@
-# (PART) Пространственная статистика {-}
-
 # Геостатистика {#gstat}
 
 
@@ -8,7 +6,13 @@ $$\newcommand{\Var}{\operatorname{Var}}
 \newcommand{\Cov}{\operatorname{Cov}}
 \newcommand{\E}{\operatorname{E}}$$
 
-[Программный код главы](https://github.com/tsamsonov/r-geo-course/blob/master/code/14-InterpolationGeostatistics.R)
+## Краткий обзор {#review}
+
+Для просмотра презентации щелкните на ней один раз левой кнопкой мыши и листайте, используя кнопки на клавиатуре:
+
+<iframe src="https://tsamsonov.github.io/r-spatstat-course-slides/01-Geostatistics_slides.html#1" width="100%" height="390px" data-external="1"></iframe>
+
+> Презентацию можно открыть в отдельном окне или вкладке браузере. Для этого щелкните по ней правой кнопкой мыши и выберите соответствующую команду.
 
 ## Введение
 
@@ -211,9 +215,11 @@ $$\E[Z^* - Z_0]^2 = \Var[Z^* - Z_0] = \Var[Z^*] + \Var[Z_0] - 2\Cov[Z^*, Z_0].$$
 
 Чтобы минимизировать данное выражение, необходимо раскрыть содержание трёх его компонент. Для этого нам понадобится следующая теорема, позволяющая выразить ковариацию двух линейных комбинаций случайных величин через ковариацию самих исходных случайных величин:  
 
-\BeginKnitrBlock{theorem}<div class="theorem"><span class="theorem" id="thm:unnamed-chunk-1"><strong>(\#thm:unnamed-chunk-1) </strong></span>Пусть $X_1,\ldots, X_n$ случайные величины, а $Y_1 = \sum\limits_{i=1}^n a_i X_i,\; Y_2 = \sum\limits_{j=1}^m b_j X_j$ — их две произвольные линейные комбинации. Тогда:
+::: {.theorem #unnamed-chunk-2}
+Пусть $X_1,\ldots, X_n$ случайные величины, а $Y_1 = \sum\limits_{i=1}^n a_i X_i,\; Y_2 = \sum\limits_{j=1}^m b_j X_j$ — их две произвольные линейные комбинации. Тогда:
 
-$$\Cov[Y_1,Y_2] = \sum\limits_{i=1}^n\sum\limits_{j=1}^m a_i b_j \Cov[X_i,X_j].$$</div>\EndKnitrBlock{theorem}
+$$\Cov[Y_1,Y_2] = \sum\limits_{i=1}^n\sum\limits_{j=1}^m a_i b_j \Cov[X_i,X_j].$$
+:::
 
 Используя результат этой теоремы, а также тот факт, что $\Var[X] = \Cov[X, X]$, распишем каждую компоненту вышеприведенного выражения:
 
@@ -608,7 +614,7 @@ ggplot() +
   theme_bw()
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;" />
 
 Данная модель достигает плато в точке $h = a$.
 
@@ -638,7 +644,7 @@ pl = ggplot() +
 (pl)
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" />
 
 - Данная модель достигает плато асимптотически.
 - В точке $h = a$ достигается $95\%$ уровня плато.
@@ -663,7 +669,7 @@ pl = ggplot() +
 (pl)
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" />
 
 - Данная модель достигает плато асимптотически.
 - В точке $h = a$ достигается $95\%$ уровня плато.
@@ -690,7 +696,7 @@ pl = ggplot() +
 (pl)
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" />
 
 - Автокорреляция присутствует на всех расстояниях: $a \rightarrow \infty$
 - Предположение о стационарности второго порядка не выполняется
@@ -753,7 +759,7 @@ rainfall = read_table2("data/Rainfall.dat") %>%
 hscat(rain_24~1, data = rainfall, 1000 * c(0, 10, 20, 50, 100), pch = 19)
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-7-1.png" width="100%" style="display: block; margin: auto;" />
 
 ### Вариограммное облако
 
@@ -768,7 +774,7 @@ ggplot(varcl) +
   theme_bw()
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-7-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-8-1.png" width="100%" />
   
 
 ### Эмпирическая вариограмма
@@ -785,7 +791,7 @@ intervals = width * 0:15
 vargr = variogram(rain_24~1, data=rainfall, cutoff = 150000, width = width)
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-9-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-10-1.png" width="100%" />
 
 Оставив только вариограмму, получим:
 
@@ -797,7 +803,7 @@ ggplot() +
   theme_bw()
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-10-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-11-1.png" width="100%" />
 Размер точки означает количество пар значений, которые попали в каждый лаг.
 
 Поскольку вариограмма есть _дисперсия разности значений_, ее рост при увеличении расстояния можно оценить также по увеличению размера «ящика» на диаграмме размаха $\sqrt\gamma$:
@@ -812,7 +818,7 @@ ggplot(varcl) +
   geom_boxplot(aes(lag, sqrt(gamma)), outlier.alpha = 0.1)
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-11-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-12-1.png" width="100%" />
 
 ### Вариокарта
 
@@ -824,7 +830,7 @@ $$\hat{\gamma} (\Delta x, \Delta y) = \frac{1}{2N_{\substack{\Delta x\\ \Delta y
 varmp = variogram(rain_24~1, data=rainfall, cutoff = 150000, width = width, map = TRUE)[['map']]
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-13-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-14-1.png" width="100%" />
 
 
 Вариокарта используется для выявления _пространственной анизотропии_. Профиль по линии из центра к краю вариокарты даст эмпирическую вариограмму
@@ -836,7 +842,7 @@ __Приближение__ (_fitting_) модели вариограммы пр�
 1. Выбор теоретической модели
 2. Подбор параметров модели: эффект самородка (nugget), радиус корреляции и плато.
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-14-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-15-1.png" width="100%" />
 
 Дана вариограмма семейства $\gamma (h; \mathbf{b})$, где $\mathbf{b} = (b_1, ..., b_k)$ — вектор из $k$ параметров модели. Параметры $\mathbf{b}$ подбираются таким образом, чтобы минимизировать следующий функционал:
 
@@ -881,7 +887,7 @@ ggplot() +
   theme_bw()
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-15-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-16-1.png" width="100%" />
 
 ### Обычный кригинг
 
@@ -898,7 +904,7 @@ ggplot() +
   geom_sf(data = st_as_sf(px_grid), size = 0.5, fill = NA)
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-16-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-17-1.png" width="100%" />
 
 ### Обычный кригинг
 
@@ -908,13 +914,13 @@ ggplot() +
 plot(vargr, model = varmd)
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-17-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-18-1.png" width="100%" />
 
 ```r
 plot(varmp)
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-17-2.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-18-2.png" width="100%" />
 
 Проинтерполируем, используя приближенную модель вариограммы:
 
@@ -927,9 +933,9 @@ plot(varmp)
 ## var1.pred  -0.4091735  7.707571 18.83325 21.50978 32.07393  67.26636
 ## var1.var   30.9929191 45.435980 52.71968 58.67491 65.48474 186.22488
 ## dimension(s):
-##   from  to  offset delta                refsys point values x/y
-## x    1 213  332239  2000 WGS 84 / UTM zone 32N    NA   NULL [x]
-## y    1  99 5121556 -2000 WGS 84 / UTM zone 32N    NA   NULL [y]
+##   from  to  offset delta                refsys x/y
+## x    1 213  332239  2000 WGS 84 / UTM zone 32N [x]
+## y    1  99 5121556 -2000 WGS 84 / UTM zone 32N [y]
 ```
 
 ### Оценка и дисперсия кригинга
@@ -959,7 +965,7 @@ ggplot() +
   theme_bw()
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-19-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-20-1.png" width="100%" />
 
 ```r
 
@@ -975,7 +981,7 @@ ggplot() +
   theme_bw()
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-19-2.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-20-2.png" width="100%" />
 
 Дисперсия кригинга высока там, где мало данных.
 
@@ -1012,7 +1018,7 @@ ggplot(cvl, aes(x = sterr)) +
   theme_bw()
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-21-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-22-1.png" width="100%" />
 
 Ошибки должны быть независимы от значений:
 
@@ -1024,7 +1030,7 @@ ggplot(cvl, aes(x = var1.pred, sterr)) +
   theme_bw()
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-22-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-23-1.png" width="100%" />
 
 ```r
 
@@ -1052,7 +1058,7 @@ ggplot(cvl, aes(x = var1.pred, observed)) +
   theme_bw()
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-23-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-24-1.png" width="100%" />
 
 ```r
 
@@ -1113,12 +1119,12 @@ ggplot() +
   theme_bw()
 ```
 
-<img src="01-Geostatistics_files/figure-html/unnamed-chunk-24-1.png" width="100%" />
+<img src="01-Geostatistics_files/figure-html/unnamed-chunk-25-1.png" width="100%" />
 
 ## Краткий обзор {#geostat_review}
 
 Для просмотра презентации щелкните на ней один раз левой кнопкой мыши и листайте, используя кнопки на клавиатуре:
-<iframe src="https://tsamsonov.github.io/r-geo-course/slides/14-Geostatistics_slides.html#1" width="100%" height="500px"></iframe>
+<iframe src="https://tsamsonov.github.io/r-geo-course/slides/14-Geostatistics_slides.html#1" width="100%" height="500px" data-external="1"></iframe>
 
 > Презентацию можно открыть в отдельном окне или вкладке браузере. Для этого щелкните по ней правой кнопкой мыши и выберите соответствующую команду.
 
@@ -1159,5 +1165,5 @@ ggplot() +
     > __Подсказка:__ перед построением сетки интерполяции странсформируйте данные в проекцию [__Меркатора__](http://spatialreference.org/ref/epsg/wgs-84-world-mercator/). Чтобы полученное поле распределения покрывало только акваторию, маскируйте полученный растр с использованием слоя _ocean_ из набора данных __Natural Earth__. Перед выполнением маскирования преобразуйте мультиполигон в обычные полигоны (в противном случае маскирование отработает некорректно).
 
 ----
-_Самсонов Т.Е._ **Визуализация и анализ географических данных на языке R.** М.: Географический факультет МГУ, 2021. DOI: [10.5281/zenodo.901911](https://doi.org/10.5281/zenodo.901911)
+_Самсонов Т.Е._ **Пространственная статистика и моделирование на языке R.** М.: Географический факультет МГУ, 2023.
 ----

@@ -12,7 +12,13 @@ library(tmap)
 library(GWmodel)
 ```
 
-[Программный код главы](https://github.com/tsamsonov/r-geo-course/blob/master/code/15-SpatstatAutocorrelation.R)
+## Краткий обзор {#review}
+
+Для просмотра презентации щелкните на ней один раз левой кнопкой мыши и листайте, используя кнопки на клавиатуре:
+
+<iframe src="https://tsamsonov.github.io/r-spatstat-course-slides/03-GWRegression_slides.html#1" width="100%" height="390px" data-external="1"></iframe>
+
+> Презентацию можно открыть в отдельном окне или вкладке браузере. Для этого щелкните по ней правой кнопкой мыши и выберите соответствующую команду.
 
 ## Географически взвешенная регрессия (GWR) {#autocorrelation_gwr}
 
@@ -58,7 +64,7 @@ $$\mathbf{W}(i) = \begin{bmatrix}
 
 <div class="figure">
 <img src="images/gwr_wlocal.png" alt="Весовая функция" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-2)Весовая функция</p>
+<p class="caption">(\#fig:unnamed-chunk-3)Весовая функция</p>
 </div>
 
 В случае _фиксированной_ весовой функции окрестность всегда имеет фиксированный размер:
@@ -69,14 +75,14 @@ $$w_{ij} = \operatorname{exp}\{-\frac{1}{2} (d_{ij}/h)^2\},$$
 
 <div class="figure">
 <img src="images/wfixed.png" alt="Фиксированная весовая функция" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-3)Фиксированная весовая функция</p>
+<p class="caption">(\#fig:unnamed-chunk-4)Фиксированная весовая функция</p>
 </div>
 
 В случае _адаптивной_ весовой функции окрестность ограничивается $N$ ближайшими точками. За пределами этой окрестности веса принимаются равными нулю:
 
 <div class="figure">
 <img src="images/wadaptive.png" alt="Адаптивная весовая функция" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-4)Адаптивная весовая функция</p>
+<p class="caption">(\#fig:unnamed-chunk-5)Адаптивная весовая функция</p>
 </div>
 
 __Полоса пропускания__ $h$ обладает следующими особенностями:
@@ -110,7 +116,7 @@ tm_shape(realest) +
   tm_view(symbol.size.fixed = TRUE)
 ```
 
-<img src="03-GWRegression_files/figure-html/unnamed-chunk-5-1.png" width="100%" />
+<img src="03-GWRegression_files/figure-html/unnamed-chunk-6-1.png" width="100%" />
 
 Для того чтобы оценить пространственую неравномерность реакции стоимости жилья на увеличение количества комнат, построим модель географически взвешенной регрессии:
 
@@ -133,7 +139,7 @@ tm_shape(gwr_res$SDF) +
 ## Краткий обзор {#gwr_review}
 
 Для просмотра презентации щелкните на ней один раз левой кнопкой мыши и листайте, используя кнопки на клавиатуре:
-<iframe src="https://tsamsonov.github.io/r-geo-course/slides/15-SpatialRegression_slides.html#1" width="100%" height="500px"></iframe>
+<iframe src="https://tsamsonov.github.io/r-geo-course/slides/15-SpatialRegression_slides.html#1" width="100%" height="500px" data-external="1"></iframe>
 
 > Презентацию можно открыть в отдельном окне или вкладке браузере. Для этого щелкните по ней правой кнопкой мыши и выберите соответствующую команду.
 
@@ -148,5 +154,5 @@ tm_shape(gwr_res$SDF) +
 
 
 ----
-_Самсонов Т.Е._ **Визуализация и анализ географических данных на языке R.** М.: Географический факультет МГУ, 2021. DOI: [10.5281/zenodo.901911](https://doi.org/10.5281/zenodo.901911)
+_Самсонов Т.Е._ **Пространственная статистика и моделирование на языке R.** М.: Географический факультет МГУ, 2023.
 ----

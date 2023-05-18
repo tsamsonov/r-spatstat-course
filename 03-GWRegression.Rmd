@@ -14,7 +14,15 @@ library(tmap)
 library(GWmodel)
 ```
 
-[Программный код главы](https://github.com/tsamsonov/r-geo-course/blob/master/code/15-SpatstatAutocorrelation.R)
+## Краткий обзор {#review}
+
+Для просмотра презентации щелкните на ней один раз левой кнопкой мыши и листайте, используя кнопки на клавиатуре:
+
+```{r, echo=FALSE}
+knitr::include_url('https://tsamsonov.github.io/r-spatstat-course-slides/03-GWRegression_slides.html#1', height = '390px')
+```
+
+> Презентацию можно открыть в отдельном окне или вкладке браузере. Для этого щелкните по ней правой кнопкой мыши и выберите соответствующую команду.
 
 ## Географически взвешенная регрессия (GWR) {#autocorrelation_gwr}
 

@@ -4,21 +4,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Введение | Пространственная статистика и моделирование на языке R</title>
+<title>Введение | Пространственная статистика на языке R</title>
 <meta name="author" content="Тимофей Самсонов">
-<meta name="description" content="Курс лекций, посвященных использованию методов пространственной статистике и моделированию на языке R">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
-<meta property="og:title" content="Введение | Пространственная статистика и моделирование на языке R">
+<meta name="description" content="Курс лекций, посвященных использованию методов пространственной статистике на языке R">
+<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta property="og:title" content="Введение | Пространственная статистика на языке R">
 <meta property="og:type" content="book">
-<meta property="og:description" content="Курс лекций, посвященных использованию методов пространственной статистике и моделированию на языке R">
+<meta property="og:description" content="Курс лекций, посвященных использованию методов пространственной статистике на языке R">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Введение | Пространственная статистика и моделирование на языке R">
+<meta name="twitter:title" content="Введение | Пространственная статистика на языке R">
 <meta name="twitter:site" content="@timofeysamsonov">
-<meta name="twitter:description" content="Курс лекций, посвященных использованию методов пространственной статистике и моделированию на языке R">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="twitter:description" content="Курс лекций, посвященных использованию методов пространственной статистике на языке R">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -28,7 +31,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Пространственная статистика и моделирование на языке R</a>
+        <a href="index.html" title="">Пространственная статистика на языке R</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -41,13 +44,10 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="active" href="index.html">Введение</a></li>
-<li class="book-part">Пространственная статистика</li>
-<li><a class="" href="spreg.html"><span class="header-section-number">1</span> Пространственная регрессия</a></li>
-<li><a class="" href="gwr.html"><span class="header-section-number">2</span> Географически взвешенная регрессия</a></li>
-<li><a class="" href="gstat.html"><span class="header-section-number">3</span> Геостатистика</a></li>
+<li><a class="" href="gstat.html"><span class="header-section-number">1</span> Геостатистика</a></li>
+<li><a class="" href="spreg.html"><span class="header-section-number">2</span> Пространственная регрессия</a></li>
+<li><a class="" href="gwr.html"><span class="header-section-number">3</span> Географически взвешенная регрессия</a></li>
 <li><a class="" href="points.html"><span class="header-section-number">4</span> Точечные паттерны</a></li>
-<li class="book-part">Пространственное моделирование</li>
-<li><a class="" href="ecol.html"><span class="header-section-number">5</span> Экологические модели</a></li>
 </ul>
 
         <div class="book-extra">
@@ -58,7 +58,7 @@
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="введение" class="section level1 unnumbered">
 <h1>Введение<a class="anchor" aria-label="anchor" href="#%D0%B2%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5"><i class="fas fa-link"></i></a>
 </h1>
-<p>Добро пожаловать на учебный курс <strong>“Пространственная статистика и моделирование на языке R”</strong>! Данный курс предназначен для уверенных пользователей R, которые имеют опыт работы с пространственными данными и хотели бы развить свои навыки в области пространственного анализа и моделирования.</p>
+<p>Добро пожаловать на учебный курс <strong>“Пространственная статистика на языке R”</strong>! Данный курс предназначен для уверенных пользователей R, которые имеют опыт работы с пространственными данными и хотели бы развить свои навыки в области пространственного анализа и моделирования.</p>
 <div class="rmdwarning">
 <p><span color="orangered"><strong>Материалы данного курса находятся в разработке</strong>. Опубликованы черновики глав, которые в дальнейшем будут дополняться и редактироваться, но возможно уже сейчас могут быть кому-то полезны. Если вы заметите какие-либо ошибки, то сообщите о них в <a href="https://github.com/tsamsonov/r-spatstat-course/issues">баг-трекере</a> курса. Спасибо!</span></p>
 </div>
@@ -82,16 +82,13 @@
 <p>Если этот курс лекций оказался полезным для вас, и вы хотите процитировать его с списке литературы вашей работы, то ссылку можно оформить по следующей форме:</p>
 <div class="inline-table"><table class="table table-sm"><tbody><tr class="odd">
 <td>
-<em>Самсонов Т.Е.</em> <strong>Пространственная статистика и моделирование на языке R.</strong> М.: Географический факультет МГУ, 2021.</td>
+<em>Самсонов Т.Е.</em> <strong>Пространственная статистика и моделирование на языке R.</strong> М.: Географический факультет МГУ, 2023.</td>
 </tr></tbody></table></div>
 </div>
 </div>
-
-
-
   <div class="chapter-nav">
 <div class="empty"></div>
-<div class="next"><a href="spreg.html"><span class="header-section-number">1</span> Пространственная регрессия</a></div>
+<div class="next"><a href="gstat.html"><span class="header-section-number">1</span> Геостатистика</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -115,7 +112,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Пространственная статистика и моделирование на языке R</strong>" was written by Тимофей Самсонов. It was last built on 2021-11-03.</p>
+    <p>"<strong>Пространственная статистика на языке R</strong>" was written by Тимофей Самсонов. It was last built on 2023-05-18.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -128,7 +125,7 @@
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
